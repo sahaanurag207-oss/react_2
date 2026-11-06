@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route, NavLink, Link } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, NavLink, Link, useLocation } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Services from './pages/Services'
@@ -8,7 +8,16 @@ import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 
 function App() {
+  return (
+    <BrowserRouter>
+      <SiteLayout />
+    </BrowserRouter>
+  )
+}
+
+function SiteLayout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
     if (!isMenuOpen) return
@@ -19,6 +28,10 @@ function App() {
     return () => window.removeEventListener('scroll', closeMenuOnScroll)
   }, [isMenuOpen])
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [location.pathname])
+
   const links = [
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
@@ -27,8 +40,7 @@ function App() {
   ]
 
   return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-[#f5f8f4] text-[#183322]">
+    <div className="min-h-screen bg-[#f5f8f4] text-[#183322]">
 
         {isMenuOpen && (
           <button
@@ -92,20 +104,21 @@ function App() {
         </header>
 
         <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <div key={location.pathname} className="page-transition">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </main>
 
         <Footer />
 
-      </div>
-    </BrowserRouter>
+    </div>
   )
 }
 

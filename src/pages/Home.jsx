@@ -64,7 +64,7 @@ function Home() {
         style={{ backgroundImage: `url(${heroBg})` }}
       >
 
-        <div className="absolute inset-0 bg-linear-to-r from-[#042e19]/95 via-[#042e19]/85 to-[#042e19]/60" />
+        <div className="absolute inset-0 bg-linear-to-r from-[#042e19]/75 via-[#042e19]/45 to-[#042e19]/20" />
 
         <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-14 sm:pt-36 sm:pb-20 md:pt-40 md:pb-24">
 
