@@ -31,14 +31,8 @@ function Contact() {
           <h2 className="text-3xl font-bold">Get in Touch</h2>
 
           <p className="text-green-100 mt-4">
-            Have questions or need help? Send us a message.
+            Use the form to share a question or describe your project.
           </p>
-
-          <div className="mt-10 space-y-6">
-            <p>📧 hello@yourbrand.com</p>
-            <p>📞 +91 98765 43210</p>
-            <p>📍 Kolkata, West Bengal, India</p>
-          </div>
 
         </div>
 
