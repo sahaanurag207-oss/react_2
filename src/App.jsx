@@ -47,20 +47,24 @@ function SiteLayout() {
             type="button"
             aria-label="Dismiss navigation overlay"
             onClick={() => setIsMenuOpen(false)}
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm md:hidden"
           />
         )}
 
         {/* Fixed Navbar with Contour Border and Frosted Blur */}
         <header className="fixed top-0 left-0 w-full z-50 bg-[#063b20]/75 backdrop-blur-md border-b border-white/10 text-white shadow-sm transition-all duration-300">
           <nav className="relative max-w-7xl mx-auto px-3 sm:px-5 py-2 flex flex-nowrap items-center justify-between gap-2 sm:gap-3">
-            <Link to="/" className="text-sm sm:text-lg font-extrabold flex items-center gap-1 sm:gap-2">
+            <Link
+              to="/"
+              onClick={() => setIsMenuOpen(false)}
+              className="text-sm sm:text-lg font-extrabold flex items-center gap-1 sm:gap-2"
+            >
               🌱 <span>YourBrand</span>
             </Link>
 
             <button
               type="button"
-              className="lg:hidden inline-flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-md hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-lime-300"
+              className="md:hidden inline-flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-md hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-lime-300"
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isMenuOpen}
               aria-controls="primary-navigation"
@@ -73,7 +77,7 @@ function SiteLayout() {
 
             <div
               id="primary-navigation"
-              className={`${isMenuOpen ? 'flex' : 'hidden'} absolute left-0 right-0 top-full z-50 flex-col items-stretch gap-1 bg-[#063b20]/95 p-3 text-sm shadow-lg backdrop-blur-md lg:static lg:flex lg:flex-row lg:items-center lg:gap-3 lg:bg-transparent lg:p-0 lg:text-sm lg:shadow-none lg:backdrop-blur-none`}
+              className={`${isMenuOpen ? 'flex' : 'hidden'} absolute left-0 right-0 top-full z-50 flex-col items-stretch gap-1 bg-[#063b20]/95 p-3 text-sm shadow-lg backdrop-blur-md md:static md:ml-auto md:flex md:flex-row md:items-center md:gap-3 md:bg-transparent md:p-0 md:text-sm md:shadow-none md:backdrop-blur-none`}
             >
               {links.map((link) => (
                 <NavLink
@@ -81,7 +85,7 @@ function SiteLayout() {
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
                   className={({ isActive }) =>
-                    `rounded px-3 py-2 lg:px-0 lg:py-0 ${
+                    `rounded px-3 py-2 md:px-0 md:py-0 ${
                       isActive
                         ? 'text-lime-300 font-bold'
                         : 'text-white/85 hover:text-lime-300 transition-colors'
@@ -95,7 +99,7 @@ function SiteLayout() {
               <Link
                 to="/contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="mt-1 bg-lime-400 text-green-950 px-4 py-2 rounded-full font-bold hover:bg-lime-300 transition shadow-sm whitespace-nowrap text-center lg:mt-0 lg:px-4 lg:py-1.5"
+                className="mt-1 bg-lime-400 text-green-950 px-4 py-2 rounded-full font-bold hover:bg-lime-300 transition shadow-sm whitespace-nowrap text-center md:mt-0 md:px-4 md:py-1.5"
               >
                 Get Started
               </Link>
