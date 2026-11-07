@@ -17,9 +17,9 @@ function NotFound() {
 
       <Link
         to="/"
-        className="mt-8 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-semibold"
+        className="action-button mt-8 bg-blue-600 hover:bg-blue-700 px-6 py-3 rounded-xl font-semibold"
       >
-        ← Back to Home
+        <span className="button-arrow" aria-hidden="true">←</span> Back to Home
       </Link>
 
     </div>

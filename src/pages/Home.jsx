@@ -1,4 +1,5 @@
 
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import heroBg from '../assets/hero-bg.jpg'
 
@@ -54,15 +55,56 @@ function LineIcon({ name, className = 'h-7 w-7' }) {
   )
 }
 
+function Reveal({ children, className = '', delay = 0 }) {
+  const elementRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(
+    () => typeof window === 'undefined' || !('IntersectionObserver' in window),
+  )
+
+  useEffect(() => {
+    const element = elementRef.current
+    if (!element) return
+
+    if (!('IntersectionObserver' in window)) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+          observer.unobserve(entry.target)
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -24px 0px' },
+    )
+
+    observer.observe(element)
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <div
+      ref={elementRef}
+      className={`scroll-reveal ${isVisible ? 'is-visible' : ''} ${className}`}
+      style={{ transitionDelay: `${delay}ms` }}
+    >
+      {children}
+    </div>
+  )
+}
+
 function Home() {
   return (
     <div>
 
       {/* Hero */}
       <section
-        className="relative min-h-90 sm:min-h-105 overflow-hidden bg-[#063b20] bg-cover bg-center text-white"
-        style={{ backgroundImage: `url(${heroBg})` }}
+        className="hero-section relative min-h-90 sm:min-h-105 overflow-hidden bg-[#063b20] text-white"
       >
+        <div
+          aria-hidden="true"
+          className="hero-background absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroBg})` }}
+        />
 
         <div className="absolute inset-0 bg-linear-to-r from-[#042e19]/75 via-[#042e19]/45 to-[#042e19]/20" />
 
@@ -70,25 +112,25 @@ function Home() {
 
           <div className="max-w-xl">
 
-            <h1 className="text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
+            <h1 className="hero-enter hero-enter-1 text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
               Innovate. Grow.
               <span className="block text-lime-400">Succeed.</span>
             </h1>
 
-            <p className="text-white text-lg mt-6 max-w-md leading-relaxed">
+            <p className="hero-enter hero-enter-2 text-white text-lg mt-6 max-w-md leading-relaxed">
               Practical consulting, digital tools, and growth strategies for businesses ready to move forward.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="hero-enter hero-enter-3 mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/services"
-                className="inline-block bg-lime-400 text-green-950 px-7 py-3 rounded-full font-bold hover:bg-lime-300 transition"
+                className="action-button inline-block bg-lime-400 text-green-950 px-7 py-3 rounded-full font-bold hover:bg-lime-300 transition"
               >
-                Explore Services →
+                Explore Services <span className="button-arrow" aria-hidden="true">→</span>
               </Link>
               <Link
                 to="/about"
-                className="inline-block border border-white/70 text-white px-7 py-3 rounded-full font-semibold hover:bg-white/10 transition"
+                className="action-button outline-button inline-block border border-white/70 text-white px-7 py-3 rounded-full font-semibold hover:bg-white/10 transition"
               >
                 Meet Your Partner
               </Link>
@@ -105,11 +147,11 @@ function Home() {
 
         <div className="bg-white shadow-lg rounded-2xl grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-green-100">
 
-          {features.map(([icon, title]) => (
-            <div key={title} className="flex flex-col items-center text-center p-4 sm:p-6">
-              <LineIcon name={icon} />
+          {features.map(([icon, title], index) => (
+            <Reveal key={title} delay={index * 100} className="feature-reveal flex flex-col items-center text-center p-4 sm:p-6">
+              <LineIcon name={icon} className="feature-icon h-7 w-7" />
               <p className="font-semibold text-sm mt-3">{title}</p>
-            </div>
+            </Reveal>
           ))}
 
         </div>
@@ -119,7 +161,7 @@ function Home() {
       {/* About preview */}
       <section className="max-w-7xl mx-auto px-6 py-20 grid md:grid-cols-2 gap-12 items-center">
 
-        <div>
+        <Reveal>
           <h2 className="text-4xl font-extrabold">
             Your Partner
             <span className="block text-green-600">in Progress</span>
@@ -131,19 +173,19 @@ function Home() {
 
           <Link
             to="/about"
-            className="inline-block mt-6 bg-green-700 text-white px-6 py-3 rounded-full hover:bg-green-800 transition"
+            className="action-button inline-block mt-6 bg-green-700 text-white px-6 py-3 rounded-full hover:bg-green-800 transition"
           >
-            Learn More →
+            Learn More <span className="button-arrow" aria-hidden="true">→</span>
           </Link>
-        </div>
+        </Reveal>
 
-        <div className="rounded-3xl overflow-hidden bg-green-100 p-3">
+        <Reveal className="rounded-3xl overflow-hidden bg-green-100 p-3">
           <img
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80"
             alt="Modern glass office building"
-            className="w-full h-72 object-cover rounded-2xl"
+            className="about-image w-full h-72 object-cover rounded-2xl"
           />
-        </div>
+        </Reveal>
 
       </section>
 
@@ -162,29 +204,28 @@ function Home() {
 
         <div className="grid md:grid-cols-3 gap-6">
 
-          {services.map((service) => (
-            <div
-              key={service.title}
-              className="bg-white rounded-2xl shadow-md overflow-hidden hover:-translate-y-2 transition"
-            >
+          {services.map((service, index) => (
+            <Reveal key={service.title} delay={index * 100}>
+              <article
+                className="service-card bg-white rounded-2xl shadow-md overflow-hidden"
+              >
+                <div className="bg-green-100 h-36 flex items-center justify-center text-green-800">
+                  <LineIcon name={service.icon} className="service-icon h-12 w-12" />
+                </div>
 
-              <div className="bg-green-100 h-36 flex items-center justify-center text-green-800">
-                <LineIcon name={service.icon} className="h-12 w-12" />
-              </div>
+                <div className="p-6">
+                  <h3 className="text-xl font-bold">{service.title}</h3>
+                  <p className="text-gray-600 mt-3">{service.description}</p>
 
-              <div className="p-6">
-                <h3 className="text-xl font-bold">{service.title}</h3>
-                <p className="text-gray-600 mt-3">{service.description}</p>
-
-                <Link
-                  to="/services"
-                  className="inline-block mt-5 text-green-700 font-bold"
-                >
-                  Learn More →
-                </Link>
-              </div>
-
-            </div>
+                  <Link
+                    to="/services"
+                    className="action-link inline-block mt-5 text-green-700 font-bold"
+                  >
+                    Learn More <span className="button-arrow" aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              </article>
+            </Reveal>
           ))}
 
         </div>
@@ -192,9 +233,9 @@ function Home() {
         <div className="text-center mt-10">
           <Link
             to="/services"
-            className="bg-green-700 text-white px-7 py-3 rounded-full hover:bg-green-800"
+            className="action-button bg-green-700 text-white px-7 py-3 rounded-full hover:bg-green-800"
           >
-            View All Services →
+            View All Services <span className="button-arrow" aria-hidden="true">→</span>
           </Link>
         </div>
 
@@ -214,9 +255,9 @@ function Home() {
 
           <Link
             to="/contact"
-            className="bg-lime-400 text-green-950 px-7 py-3 rounded-full font-bold hover:bg-lime-300"
+            className="action-button bg-lime-400 text-green-950 px-7 py-3 rounded-full font-bold hover:bg-lime-300"
           >
-            Contact Us →
+            Contact Us <span className="button-arrow" aria-hidden="true">→</span>
           </Link>
 
         </div>

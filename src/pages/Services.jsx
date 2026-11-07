@@ -25,7 +25,7 @@ function Services() {
       <div className="grid md:grid-cols-3 gap-6">
 
         {services.map(([icon, title, description]) => (
-          <div key={title} className="bg-white rounded-2xl shadow-md p-8 hover:shadow-xl hover:-translate-y-1 transition">
+          <div key={title} className="lift-card bg-white rounded-2xl shadow-md p-8">
 
             <div className="text-5xl">{icon}</div>
 
@@ -33,8 +33,8 @@ function Services() {
 
             <p className="text-gray-600 mt-3 leading-relaxed">{description}</p>
 
-            <Link to="/contact" className="inline-block mt-6 text-green-700 font-bold">
-              Get Started →
+            <Link to="/contact" className="interactive-link inline-block mt-6 text-green-700 font-bold">
+              Get Started <span className="button-arrow" aria-hidden="true">→</span>
             </Link>
 
           </div>
@@ -45,7 +45,7 @@ function Services() {
       <div className="text-center mt-16 bg-green-800 text-white p-10 rounded-3xl">
         <h2 className="text-3xl font-bold">Need a custom solution?</h2>
         <p className="mt-3 text-green-100">Let's discuss your business goals.</p>
-        <Link to="/contact" className="inline-block mt-6 bg-lime-400 text-green-950 px-6 py-3 rounded-full font-bold">
+        <Link to="/contact" className="action-button inline-block mt-6 bg-lime-400 text-green-950 px-6 py-3 rounded-full font-bold">
           Contact Us
         </Link>
       </div>

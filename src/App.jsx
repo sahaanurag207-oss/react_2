@@ -51,20 +51,23 @@ function SiteLayout() {
           />
         )}
 
-        {/* Fixed Navbar with Contour Border and Frosted Blur */}
-        <header className="fixed top-0 left-0 w-full z-50 bg-[#063b20]/75 backdrop-blur-md border-b border-white/10 text-white shadow-sm transition-all duration-300">
-          <nav className="relative max-w-7xl mx-auto px-3 sm:px-5 py-2 flex flex-nowrap items-center justify-between gap-2 sm:gap-3">
+        <header className="fixed top-0 left-0 w-full z-50 bg-[#003b20] text-white shadow-sm">
+          <nav className="relative mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 sm:px-6">
             <Link
               to="/"
               onClick={() => setIsMenuOpen(false)}
-              className="text-sm sm:text-lg font-extrabold flex items-center gap-1 sm:gap-2"
+              className="flex items-center gap-2 justify-self-start text-base font-extrabold sm:text-lg"
             >
-              🌱 <span>YourBrand</span>
+              <svg aria-hidden="true" className="h-6 w-6 text-lime-400" fill="none" viewBox="0 0 24 24">
+                <path d="M20.5 3.5C11.5 3.5 5 7.5 5 14a6.5 6.5 0 0 0 6.5 6.5C18 20.5 20.5 12 20.5 3.5Z" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" />
+                <path d="M3 21c3-5 7-8 12-11" stroke="currentColor" strokeLinecap="round" strokeWidth="2" />
+              </svg>
+              <span>YourBrand</span>
             </Link>
 
             <button
               type="button"
-              className="md:hidden inline-flex h-9 w-9 flex-col items-center justify-center gap-1.5 rounded-md hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-lime-300"
+              className="col-start-3 inline-flex h-10 w-10 flex-col items-center justify-center justify-self-end gap-1.5 rounded-md hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-lime-300 md:hidden"
               aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
               aria-expanded={isMenuOpen}
               aria-controls="primary-navigation"
@@ -77,18 +80,19 @@ function SiteLayout() {
 
             <div
               id="primary-navigation"
-              className={`${isMenuOpen ? 'flex' : 'hidden'} absolute left-0 right-0 top-full z-50 flex-col items-stretch gap-1 bg-[#063b20]/95 p-3 text-sm shadow-lg backdrop-blur-md md:static md:ml-auto md:flex md:flex-row md:items-center md:gap-3 md:bg-transparent md:p-0 md:text-sm md:shadow-none md:backdrop-blur-none`}
+              className={`${isMenuOpen ? 'flex mobile-menu-open' : 'hidden'} absolute left-0 right-0 top-full z-50 flex-col items-stretch gap-1 border-t border-white/10 bg-[#003b20] p-3 text-sm shadow-lg md:static md:col-start-2 md:col-end-3 md:flex md:flex-row md:items-center md:justify-center md:gap-7 md:border-0 md:bg-transparent md:p-0 md:text-sm md:shadow-none`}
             >
-              {links.map((link) => (
+              {links.map((link, index) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsMenuOpen(false)}
+                  style={{ '--menu-delay': `${index * 70}ms` }}
                   className={({ isActive }) =>
-                    `rounded px-3 py-2 md:px-0 md:py-0 ${
+                    `mobile-menu-item rounded px-3 py-2 font-semibold transition-colors md:px-0 md:py-1 ${
                       isActive
-                        ? 'text-lime-300 font-bold'
-                        : 'text-white/85 hover:text-lime-300 transition-colors'
+                        ? 'text-lime-400'
+                        : 'text-white/90 hover:text-lime-400'
                     }`
                   }
                 >
@@ -99,11 +103,19 @@ function SiteLayout() {
               <Link
                 to="/contact"
                 onClick={() => setIsMenuOpen(false)}
-                className="mt-1 bg-lime-400 text-green-950 px-4 py-2 rounded-full font-bold hover:bg-lime-300 transition shadow-sm whitespace-nowrap text-center md:mt-0 md:px-4 md:py-1.5"
+                className="action-button mobile-menu-item mt-1 rounded-full bg-lime-400 px-4 py-2 text-center font-bold text-green-950 shadow-sm transition hover:bg-lime-300 md:hidden"
               >
                 Get Started
               </Link>
             </div>
+
+            <Link
+              to="/contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="action-button hidden justify-self-end rounded-full bg-lime-400 px-5 py-2 font-bold text-green-950 shadow-sm transition hover:bg-lime-300 md:block"
+            >
+              Get Started
+            </Link>
           </nav>
         </header>
 

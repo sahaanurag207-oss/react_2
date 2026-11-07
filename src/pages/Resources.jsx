@@ -26,7 +26,7 @@ function Resources() {
       <div className="grid md:grid-cols-2 gap-6 mt-12">
 
         {resources.map(([icon, title, description]) => (
-          <div key={title} className="bg-white rounded-2xl shadow-md p-8">
+          <div key={title} className="lift-card bg-white rounded-2xl shadow-md p-8">
 
             <div className="text-5xl">{icon}</div>
 
@@ -34,8 +34,8 @@ function Resources() {
 
             <p className="text-gray-600 mt-3">{description}</p>
 
-            <Link to="/contact" className="inline-block mt-6 text-green-700 font-bold">
-              Learn More →
+            <Link to="/contact" className="interactive-link inline-block mt-6 text-green-700 font-bold">
+              Learn More <span className="button-arrow" aria-hidden="true">→</span>
             </Link>
 
           </div>

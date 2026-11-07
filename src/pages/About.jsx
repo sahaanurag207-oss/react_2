@@ -26,15 +26,15 @@ function About() {
             and deliver solutions that create lasting value.
           </p>
 
-          <Link to="/contact" className="inline-block mt-8 bg-green-700 text-white px-6 py-3 rounded-full">
-            Work With Us →
+          <Link to="/contact" className="action-button inline-block mt-8 bg-green-700 text-white px-6 py-3 rounded-full">
+            Work With Us <span className="button-arrow" aria-hidden="true">→</span>
           </Link>
         </div>
 
         <img
           src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1000&q=80"
           alt="Collaborative modern office"
-          className="rounded-3xl w-full h-80 object-cover"
+          className="page-image rounded-3xl w-full h-80 object-cover"
         />
 
       </div>
@@ -46,7 +46,7 @@ function About() {
           ['👁️', 'Our Vision', 'Build a brighter future for businesses and communities.'],
           ['🤝', 'Our Values', 'Trust, creativity, collaboration, and excellence.'],
         ].map(([icon, title, description]) => (
-          <div key={title} className="bg-white p-8 rounded-2xl shadow-sm">
+          <div key={title} className="lift-card bg-white p-8 rounded-2xl shadow-sm">
             <div className="text-4xl">{icon}</div>
             <h2 className="text-xl font-bold mt-4">{title}</h2>
             <p className="text-gray-600 mt-3">{description}</p>
