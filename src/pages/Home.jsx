@@ -2,12 +2,19 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import heroBg from '../assets/hero-bg.jpg'
+import plantImage from '../assets/plant.jpg'
+
+const heroSlides = [
+  "url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2200&q=85')",
+  `url(${heroBg})`,
+  `url(${plantImage})`,
+]
 
 const features = [
-  ['sprout', 'Sustainable Growth'],
-  ['shield', 'Trusted Services'],
-  ['team', 'Expert Team'],
-  ['support', '24/7 Support'],
+  ['sprout', 'Sustainable Growth', 'Progress that keeps long-term impact in mind.'],
+  ['shield', 'Trusted Services', 'Practical guidance you can count on.'],
+  ['team', 'Expert Team', 'Experienced people focused on your goals.'],
+  ['support', '24/7 Support', 'Helpful support whenever you need us.'],
 ]
 
 const services = [
@@ -93,69 +100,101 @@ function Reveal({ children, className = '', delay = 0 }) {
 }
 
 function Home() {
+  const [activeSlide, setActiveSlide] = useState(0)
+
+  useEffect(() => {
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (motionPreference.matches) return
+
+    const slideInterval = window.setInterval(() => {
+      setActiveSlide((currentSlide) => (currentSlide + 1) % heroSlides.length)
+    }, 6000)
+
+    return () => window.clearInterval(slideInterval)
+  }, [])
+
   return (
     <div>
 
       {/* Hero */}
-      <section
-        className="hero-section relative min-h-90 sm:min-h-105 overflow-hidden bg-[#063b20] text-white"
-      >
-        <div
-          aria-hidden="true"
-          className="hero-background absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBg})` }}
-        />
+      <section className="hero-section relative flex min-h-160 h-screen items-center overflow-hidden bg-[#063b20] text-white">
+        {heroSlides.map((backgroundImage, index) => (
+          <div
+            key={backgroundImage}
+            aria-hidden="true"
+            className={`hero-background hero-slide absolute inset-0 bg-cover bg-center ${
+              activeSlide === index ? 'hero-slide-active' : ''
+            }`}
+            style={{ backgroundImage }}
+          />
+        ))}
 
-        <div className="absolute inset-0 bg-linear-to-r from-[#042e19]/75 via-[#042e19]/45 to-[#042e19]/20" />
+        <div className="absolute inset-0 bg-[#002b17]/65" />
+        <div className="absolute inset-0 bg-linear-to-r from-[#002b17]/45 via-transparent to-[#002b17]/35" />
 
-        <div className="relative max-w-7xl mx-auto px-6 pt-28 pb-14 sm:pt-36 sm:pb-20 md:pt-40 md:pb-24">
-
-          <div className="max-w-xl">
-
-            <h1 className="hero-enter hero-enter-1 text-3xl sm:text-5xl md:text-6xl font-extrabold leading-tight">
-              Innovate. Grow.
-              <span className="block text-lime-400">Succeed.</span>
+        <div className="relative mx-auto w-full max-w-7xl px-6 pt-20 pb-24">
+          <div className="max-w-2xl">
+            <p className="hero-enter hero-enter-1 text-sm font-bold tracking-[0.24em] text-lime-400 sm:text-base">
+              WELCOME TO YOURBRAND
+            </p>
+            <h1 className="hero-enter hero-enter-2 mt-5 text-4xl font-extrabold uppercase leading-[1.12] sm:text-5xl md:text-6xl">
+              Innovate. Grow<span className="text-lime-400">.</span>
+              <span className="block">Succeed</span>
             </h1>
 
-            <p className="hero-enter hero-enter-2 text-white text-lg mt-6 max-w-md leading-relaxed">
-              Practical consulting, digital tools, and growth strategies for businesses ready to move forward.
+            <p className="hero-enter hero-enter-3 mt-6 max-w-xl text-base leading-relaxed text-white/90 sm:text-lg">
+              We help businesses innovate, grow and succeed with smart strategies and modern solutions.
             </p>
 
-            <div className="hero-enter hero-enter-3 mt-8 flex flex-wrap items-center gap-3">
+            <div className="hero-enter hero-enter-4 mt-8 flex flex-wrap items-center gap-3">
               <Link
                 to="/services"
-                className="action-button inline-block bg-lime-400 text-green-950 px-7 py-3 rounded-full font-bold hover:bg-lime-300 transition"
+                className="action-button inline-flex items-center gap-2 rounded-full bg-lime-400 px-6 py-3 font-bold text-green-950 transition hover:bg-lime-300"
               >
-                Explore Services <span className="button-arrow" aria-hidden="true">→</span>
-              </Link>
-              <Link
-                to="/about"
-                className="action-button outline-button inline-block border border-white/70 text-white px-7 py-3 rounded-full font-semibold hover:bg-white/10 transition"
-              >
-                Meet Your Partner
+                Explore Our Services <span className="button-arrow" aria-hidden="true">→</span>
               </Link>
             </div>
-
           </div>
-
         </div>
 
+        <div role="group" aria-label="Hero image slides" className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              type="button"
+              aria-label={`Show slide ${index + 1}`}
+              aria-current={activeSlide === index ? 'true' : undefined}
+              onClick={() => setActiveSlide(index)}
+              className={`hero-slide-dot rounded-full ${
+                activeSlide === index ? 'hero-slide-dot-active' : ''
+              }`}
+            />
+          ))}
+        </div>
       </section>
 
       {/* Features */}
-      <section className="max-w-6xl mx-auto px-5 py-8 sm:py-10">
-
-        <div className="bg-white shadow-lg rounded-2xl grid grid-cols-2 md:grid-cols-4 divide-x divide-y md:divide-y-0 divide-green-100">
-
-          {features.map(([icon, title], index) => (
-            <Reveal key={title} delay={index * 100} className="feature-reveal flex flex-col items-center text-center p-4 sm:p-6">
-              <LineIcon name={icon} className="feature-icon h-7 w-7" />
-              <p className="font-semibold text-sm mt-3">{title}</p>
-            </Reveal>
-          ))}
-
+      <section className="mx-auto max-w-7xl px-5 py-10 sm:px-6 sm:py-14">
+        <div className="mb-7 text-center">
+          <p className="text-xs font-bold tracking-[0.2em] text-green-700">WHY YOURBRAND</p>
+          <h2 className="mt-2 text-2xl font-extrabold text-[#183322] sm:text-3xl">
+            A partner for every step forward
+          </h2>
         </div>
 
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {features.map(([icon, title, description], index) => (
+            <Reveal key={title} delay={index * 100} className="feature-reveal">
+              <article className="feature-card group h-full rounded-2xl border border-green-100/80 bg-white px-5 py-6 text-center shadow-[0_8px_24px_rgba(24,51,34,0.06)] sm:px-6 sm:py-7">
+                <div className="feature-icon-wrap mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-green-50 text-green-800">
+                  <LineIcon name={icon} className="feature-icon h-7 w-7" />
+                </div>
+                <h3 className="mt-4 text-base font-bold text-[#183322] sm:text-lg">{title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-gray-600">{description}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
       </section>
 
       {/* About preview */}

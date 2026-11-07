@@ -18,6 +18,37 @@ body {
   transform-origin: center;
 }
 
+.hero-slide {
+  opacity: 0;
+  transition: opacity 900ms ease-in-out;
+}
+
+.hero-slide-active {
+  opacity: 1;
+}
+
+.hero-slide-dot {
+  width: 9px;
+  height: 9px;
+  padding: 0;
+  border: 0;
+  background-color: rgb(255 255 255 / 70%);
+  cursor: pointer;
+  transition:
+    width 220ms ease,
+    background-color 220ms ease,
+    transform 220ms ease;
+}
+
+.hero-slide-dot:hover {
+  transform: scale(1.2);
+}
+
+.hero-slide-dot-active {
+  width: 32px;
+  background-color: #a3e635;
+}
+
 .hero-enter {
   animation: hero-fade-up 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
 }
@@ -32,6 +63,10 @@ body {
 
 .hero-enter-3 {
   animation-delay: 380ms;
+}
+
+.hero-enter-4 {
+  animation-delay: 530ms;
 }
 
 .scroll-reveal {
@@ -115,7 +150,33 @@ a:hover .button-arrow,
   transition: transform 300ms ease;
 }
 
-.feature-reveal:hover .feature-icon {
+.feature-card {
+  transition:
+    border-color 280ms ease,
+    box-shadow 280ms ease,
+    transform 280ms ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-4px);
+  border-color: rgb(134 239 172 / 70%);
+  box-shadow: 0 18px 34px rgb(24 51 34 / 11%);
+}
+
+.feature-icon-wrap {
+  transition:
+    color 280ms ease,
+    background-color 280ms ease,
+    transform 280ms ease;
+}
+
+.feature-card:hover .feature-icon-wrap {
+  transform: rotate(-4deg);
+  color: #365314;
+  background-color: #ecfccb;
+}
+
+.feature-card:hover .feature-icon {
   animation: icon-float 900ms ease-in-out infinite alternate;
 }
 

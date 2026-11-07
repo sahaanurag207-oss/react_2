@@ -17,7 +17,16 @@ function App() {
 
 function SiteLayout() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isScrolled, setIsScrolled] = useState(false)
   const location = useLocation()
+
+  useEffect(() => {
+    const updateScrollState = () => setIsScrolled(window.scrollY > 24)
+    updateScrollState()
+    window.addEventListener('scroll', updateScrollState, { passive: true })
+
+    return () => window.removeEventListener('scroll', updateScrollState)
+  }, [])
 
   useEffect(() => {
     if (!isMenuOpen) return
@@ -52,7 +61,11 @@ function SiteLayout() {
           />
         )}
 
-        <header className="fixed top-0 left-0 w-full z-50 bg-[#003b20] text-white shadow-sm">
+        <header className={`fixed top-0 left-0 w-full z-50 text-white transition-colors duration-300 ${
+          location.pathname === '/' && !isScrolled
+            ? 'bg-transparent shadow-none'
+            : 'bg-[#003b20]/95 shadow-sm backdrop-blur-md'
+        }`}>
           <nav className="relative mx-auto grid max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-4 py-3 sm:px-6">
             <Link
               to="/"
