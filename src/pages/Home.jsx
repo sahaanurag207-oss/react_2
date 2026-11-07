@@ -8,6 +8,8 @@ const heroSlides = [
   "url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2200&q=85')",
   `url(${heroBg})`,
   `url(${plantImage})`,
+  "url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=2200&q=85')",
+  "url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=2200&q=85')",
 ]
 
 const features = [
