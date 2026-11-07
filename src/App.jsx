@@ -38,10 +38,12 @@ function SiteLayout() {
   }, [isMenuOpen])
 
   useEffect(() => {
-    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-      ? 'auto'
-      : 'smooth'
-    window.scrollTo({ top: 0, behavior })
+    const root = document.documentElement
+    const previousScrollBehavior = root.style.scrollBehavior
+
+    root.style.scrollBehavior = 'auto'
+    window.scrollTo(0, 0)
+    root.style.scrollBehavior = previousScrollBehavior
   }, [location.pathname])
 
   const links = [

@@ -14,7 +14,7 @@ body {
 }
 
 .page-transition {
-  animation: page-enter 520ms var(--motion-smooth) both;
+  animation: page-enter 420ms var(--motion-smooth) both;
 }
 
 .hero-background {
@@ -302,12 +302,12 @@ a:hover .button-arrow,
 @keyframes page-enter {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translate3d(0, 6px, 0);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 
