@@ -104,13 +104,28 @@ function Home() {
 
   useEffect(() => {
     const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (motionPreference.matches) return
 
-    const slideInterval = window.setInterval(() => {
-      setActiveSlide((currentSlide) => (currentSlide + 1) % heroSlides.length)
-    }, 6000)
+    let slideInterval
+    const updateAutoplay = () => {
+      window.clearInterval(slideInterval)
+      slideInterval = undefined
 
-    return () => window.clearInterval(slideInterval)
+      if (motionPreference.matches || document.hidden) return
+
+      slideInterval = window.setInterval(() => {
+        setActiveSlide((currentSlide) => (currentSlide + 1) % heroSlides.length)
+      }, 6000)
+    }
+
+    updateAutoplay()
+    motionPreference.addEventListener('change', updateAutoplay)
+    document.addEventListener('visibilitychange', updateAutoplay)
+
+    return () => {
+      window.clearInterval(slideInterval)
+      motionPreference.removeEventListener('change', updateAutoplay)
+      document.removeEventListener('visibilitychange', updateAutoplay)
+    }
   }, [])
 
   return (
@@ -165,6 +180,7 @@ function Home() {
               aria-label={`Show slide ${index + 1}`}
               aria-current={activeSlide === index ? 'true' : undefined}
               onClick={() => setActiveSlide(index)}
+              style={{ '--slide-index': index }}
               className={`hero-slide-dot rounded-full ${
                 activeSlide === index ? 'hero-slide-dot-active' : ''
               }`}

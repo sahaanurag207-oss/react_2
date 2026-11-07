@@ -38,7 +38,10 @@ function SiteLayout() {
   }, [isMenuOpen])
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? 'auto'
+      : 'smooth'
+    window.scrollTo({ top: 0, behavior })
   }, [location.pathname])
 
   const links = [
@@ -164,6 +167,54 @@ function Footer() {
             <p className="text-sm text-green-100 mt-3 max-w-xs">
             Practical consulting, technology, and growth support for your business.
             </p>
+            <div className="mt-5 flex items-center gap-3" aria-label="Social media">
+              <a
+                href="https://www.facebook.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="social-link social-facebook"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M13.5 21v-7h2.35l.35-2.7h-2.7V9.58c0-.78.22-1.31 1.35-1.31h1.44V5.85c-.25-.03-1.1-.1-2.1-.1-2.08 0-3.5 1.27-3.5 3.6v1.95H8.3V14h2.39v7h2.8Z" />
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Instagram"
+                className="social-link social-instagram"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                  <rect x="3.5" y="3.5" width="17" height="17" rx="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.7" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="social-link social-linkedin"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M6.5 8.5a1.75 1.75 0 1 0 0-3.5 1.75 1.75 0 0 0 0 3.5ZM5 10h3v9H5v-9Zm5 0h2.9v1.23h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6V19h-3v-4.2c0-1-.02-2.28-1.4-2.28-1.4 0-1.62 1.1-1.62 2.2V19H10v-9Z" />
+                </svg>
+              </a>
+              <a
+                href="https://x.com/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="X"
+                className="social-link social-x"
+              >
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18.9 3H22l-6.78 7.75L23.2 21h-6.25l-4.9-6.4L6.45 21H3.3l7.25-8.28L2.8 3h6.4l4.43 5.86L18.9 3Zm-1.1 16h1.73L8.28 4.9H6.42L17.8 19Z" />
+                </svg>
+              </a>
+            </div>
           </div>
 
           <div>

@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+:root {
+  --motion-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -10,21 +14,22 @@ body {
 }
 
 .page-transition {
-  animation: page-enter 240ms ease-out both;
+  animation: page-enter 520ms var(--motion-smooth) both;
 }
 
 .hero-background {
-  animation: hero-ken-burns 14s ease-in-out infinite alternate;
   transform-origin: center;
 }
 
 .hero-slide {
   opacity: 0;
-  transition: opacity 900ms ease-in-out;
+  transition: opacity 1200ms var(--motion-smooth);
+  will-change: opacity;
 }
 
 .hero-slide-active {
   opacity: 1;
+  animation: hero-ken-burns 8s linear both;
 }
 
 .hero-slide-dot {
@@ -35,13 +40,18 @@ body {
   background-color: rgb(255 255 255 / 70%);
   cursor: pointer;
   transition:
-    width 220ms ease,
-    background-color 220ms ease,
-    transform 220ms ease;
+    width 360ms var(--motion-smooth),
+    background-color 360ms var(--motion-smooth),
+    transform 360ms var(--motion-smooth);
 }
 
 .hero-slide-dot:hover {
   transform: scale(1.2);
+}
+
+.hero-slide-dot:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 4px;
 }
 
 .hero-slide-dot-active {
@@ -50,7 +60,7 @@ body {
 }
 
 .hero-enter {
-  animation: hero-fade-up 650ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation: hero-fade-up 850ms var(--motion-smooth) both;
 }
 
 .hero-enter-1 {
@@ -71,10 +81,11 @@ body {
 
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translate3d(0, 24px, 0);
   transition:
-    opacity 650ms ease,
-    transform 650ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    opacity 800ms var(--motion-smooth),
+    transform 800ms var(--motion-smooth);
+  will-change: opacity, transform;
 }
 
 .scroll-reveal.is-visible {
@@ -84,11 +95,11 @@ body {
 
 .action-button {
   transition:
-    color 220ms ease,
-    background-color 220ms ease,
-    border-color 220ms ease,
-    filter 220ms ease,
-    transform 220ms ease;
+    color 320ms var(--motion-smooth),
+    background-color 320ms var(--motion-smooth),
+    border-color 320ms var(--motion-smooth),
+    filter 320ms var(--motion-smooth),
+    transform 320ms var(--motion-smooth);
 }
 
 .action-button:hover {
@@ -106,11 +117,11 @@ body {
 
 .button-arrow {
   display: inline-block;
-  transition: transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition: transform 320ms var(--motion-smooth);
 }
 
 .action-link {
-  transition: transform 220ms ease;
+  transition: transform 320ms var(--motion-smooth);
 }
 
 .action-link:active {
@@ -125,8 +136,8 @@ a:hover .button-arrow,
 .lift-card {
   position: relative;
   transition:
-    transform 280ms ease,
-    box-shadow 280ms ease;
+    transform 420ms var(--motion-smooth),
+    box-shadow 420ms var(--motion-smooth);
 }
 
 .lift-card:hover {
@@ -135,7 +146,7 @@ a:hover .button-arrow,
 }
 
 .page-image {
-  transition: transform 450ms ease;
+  transition: transform 700ms var(--motion-smooth);
 }
 
 .page-image:hover {
@@ -143,18 +154,18 @@ a:hover .button-arrow,
 }
 
 .contact-confirmation {
-  animation: hero-fade-up 400ms ease-out both;
+  animation: hero-fade-up 600ms var(--motion-smooth) both;
 }
 
 .feature-icon {
-  transition: transform 300ms ease;
+  transition: transform 420ms var(--motion-smooth);
 }
 
 .feature-card {
   transition:
-    border-color 280ms ease,
-    box-shadow 280ms ease,
-    transform 280ms ease;
+    border-color 420ms var(--motion-smooth),
+    box-shadow 420ms var(--motion-smooth),
+    transform 420ms var(--motion-smooth);
 }
 
 .feature-card:hover {
@@ -165,9 +176,9 @@ a:hover .button-arrow,
 
 .feature-icon-wrap {
   transition:
-    color 280ms ease,
-    background-color 280ms ease,
-    transform 280ms ease;
+    color 420ms var(--motion-smooth),
+    background-color 420ms var(--motion-smooth),
+    transform 420ms var(--motion-smooth);
 }
 
 .feature-card:hover .feature-icon-wrap {
@@ -181,7 +192,7 @@ a:hover .button-arrow,
 }
 
 .about-image {
-  transition: transform 500ms ease;
+  transition: transform 700ms var(--motion-smooth);
 }
 
 .scroll-reveal:hover .about-image {
@@ -192,8 +203,8 @@ a:hover .button-arrow,
   position: relative;
   height: 100%;
   transition:
-    transform 280ms ease,
-    box-shadow 280ms ease;
+    transform 420ms var(--motion-smooth),
+    box-shadow 420ms var(--motion-smooth);
 }
 
 .service-card::after {
@@ -206,7 +217,7 @@ a:hover .button-arrow,
   background: #65a30d;
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform 280ms ease;
+  transition: transform 420ms var(--motion-smooth);
 }
 
 .service-card:hover {
@@ -219,7 +230,7 @@ a:hover .button-arrow,
 }
 
 .service-icon {
-  transition: transform 300ms ease;
+  transition: transform 420ms var(--motion-smooth);
 }
 
 .service-card:hover .service-icon {
@@ -227,12 +238,65 @@ a:hover .button-arrow,
 }
 
 .mobile-menu-item {
-  transition: opacity 220ms ease, transform 220ms ease;
+  transition: opacity 320ms var(--motion-smooth), transform 320ms var(--motion-smooth);
 }
 
 .mobile-menu-open .mobile-menu-item {
-  animation: menu-item-enter 280ms ease both;
+  animation: menu-item-enter 420ms var(--motion-smooth) both;
   animation-delay: var(--menu-delay, 0ms);
+}
+
+.social-link {
+  display: inline-flex;
+  width: 52px;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: 9999px;
+  color: rgb(220 252 231 / 82%);
+  transition:
+    color 360ms var(--motion-smooth),
+    background-color 360ms var(--motion-smooth),
+    border-color 360ms var(--motion-smooth),
+    transform 360ms var(--motion-smooth);
+}
+
+.social-link:hover,
+.social-link:focus-visible {
+  transform: translateY(-3px);
+  background-color: white;
+  border-color: transparent;
+}
+
+.social-link:focus-visible {
+  outline: 2px solid #a3e635;
+  outline-offset: 3px;
+}
+
+.social-link svg {
+  width: 28px;
+  height: 28px;
+}
+
+.social-facebook:hover,
+.social-facebook:focus-visible {
+  color: #0866ff;
+}
+
+.social-instagram:hover,
+.social-instagram:focus-visible {
+  color: #e1306c;
+}
+
+.social-linkedin:hover,
+.social-linkedin:focus-visible {
+  color: #0a66c2;
+}
+
+.social-x:hover,
+.social-x:focus-visible {
+  color: #000;
 }
 
 @keyframes page-enter {
@@ -312,5 +376,6 @@ a:hover .button-arrow,
   .scroll-reveal {
     opacity: 1;
     transform: none;
+    will-change: auto;
   }
 }
